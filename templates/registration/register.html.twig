@@ -7,7 +7,7 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-<<<<<<< HEAD
+
     <div class="flex flex-row">
 
     {{ include('admin/components/navbarAdmin.html.twig') }}
@@ -67,7 +67,7 @@
                                     
 
                                     <div>
-                                        <label class="text-gray-700 dark:text-dark-200 " for="Lastname">Lastname</label>
+                                        <label class="text-gray-700 dark:text-dark-200 " for="Lastname">Email</label>
                                         {{ form_widget(registrationForm.email , {'attr':
                                             {'class': 'form-control  w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md white:bg-gray-800 white:text-gray-300 white:border-gray-600 focus:border-blue-400 white:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40'}} ) }}
                                     </div>
@@ -79,8 +79,14 @@
                                     </div>
 
                                     <div>
-                                        <label class="text-gray-700 dark:text-dark-200 " for="Username">Username</label>
+                                        <label class="text-gray-700 dark:text-dark-200 " for="Username">Lastname</label>
                                         {{ form_widget(registrationForm.username , {'attr':
+                                            {'class': 'form-control  w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md white:bg-gray-800 white:text-gray-300 white:border-gray-600 focus:border-blue-400 white:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40'}} ) }}
+                                    </div>
+
+                                    <div>
+                                        <label class="text-gray-700 dark:text-dark-200 " for="Company name">Company name</label>
+                                        {{ form_widget(registrationForm.company , {'attr':
                                             {'class': 'form-control  w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md white:bg-gray-800 white:text-gray-300 white:border-gray-600 focus:border-blue-400 white:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40'}} ) }}
                                     </div>
 
@@ -89,6 +95,8 @@
                                         {{ form_widget(registrationForm.plainPassword , {'attr':
                                             {'class': 'form-control  w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md white:bg-gray-800 white:text-gray-300 white:border-gray-600 focus:border-blue-400 white:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40'}} ) }}
                                     </div>
+
+                                    
                                     
                             
 
