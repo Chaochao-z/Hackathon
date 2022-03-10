@@ -42,6 +42,11 @@ class Report
      */
     private $user_id;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $Created_at;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Report
     public function setUserId(?User $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->Created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    {
+        $this->Created_at = $Created_at;
 
         return $this;
     }

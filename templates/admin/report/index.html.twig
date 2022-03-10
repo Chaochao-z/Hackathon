@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report index{% endblock %}
+
+{% block body %}
+    <h1>Report index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Product</th>
+                <th>Path</th>
+                <th>Created At</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>{{ report.name }}</td>
+                <td>{{ report.description }}</td>
+                <td>{{ report.product }}</td>
+                <td>{{ report.path }}</td>
+                <td>{{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('admin_report_show', {'id': report.id}) }}">show</a>
+                    <a href="{{ path('admin_report_edit', {'id': report.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_report_new') }}">Create new</a>
+{% endblock %}
