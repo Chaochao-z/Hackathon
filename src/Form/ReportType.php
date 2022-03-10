@@ -18,7 +18,6 @@ class ReportType extends AbstractType
             ->add('description')
             ->add('product')
             ->add('path')
-            ->add('Created_at')
             ->add('user',EntityType::class,[
                 'class' => User::class,
                 'choice_label' => 'username'

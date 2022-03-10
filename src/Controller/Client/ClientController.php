@@ -21,8 +21,8 @@ class ClientController extends AbstractController
     #[Route('/client/account', name: 'client_account')]
     public function client_account(): Response
     {
-        return $this->render('client/index.html.twig', [
-            'controller_name' => 'ClientController',
+        return $this->render('client/account.html.twig', [
+            'user' => $this->getUser(),
         ]);
     }
     #[Route('/client/report', name: 'client_report')]

@@ -23,8 +23,7 @@
                 <td>{{ report.product }}</td>
                 <td>{{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_report_show', {'id': report.id}) }}">show</a>
-                    <a href="{{ path('admin_report_edit', {'id': report.id}) }}">edit</a>
+                    <a href="#">Download</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +34,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_report_new') }}">Create new</a>
 {% endblock %}
