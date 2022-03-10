@@ -1,0 +1,233 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Upload {% endblock %}
+
+{% block body %}
+
+    <h1>PARTIE 1 = Score 1 Hydratant</h1>
+
+    <input type="file" id="fileUpload"/>
+    <button id="upload" value="Upload" onclick="UploadProcess()">upload</button>
+
+    <div>
+        <div id="selectColumns" style="display: none">
+        </div>
+
+        <div id="div_graph" style="display: none">
+            <canvas id="myChart" height="10" width="50"></canvas>
+        </div>
+    </div>
+
+
+
+    <button id="generate_rapport" style="display: none" onclick="generate_pdf()">Générer un rapport</button>
+
+    <script>
+
+        function UploadProcess() {
+            //Reference the FileUpload element.
+            var fileUpload = document.getElementById("fileUpload");
+
+            //Validate whether File is valid Excel file.
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
+            if (regex.test(fileUpload.value.toLowerCase())) {
+                if (typeof (FileReader) != "undefined") {
+                    var reader = new FileReader();
+
+                    //For Browsers other than IE.
+                    if (reader.readAsBinaryString) {
+                        reader.onload = function (e) {
+                            GetTableFromExcel(e.target.result);
+                        };
+                        reader.readAsBinaryString(fileUpload.files[0]);
+                    } else {
+                        //For IE Browser.
+                        reader.onload = function (e) {
+                            var data = "";
+                            var bytes = new Uint8Array(e.target.result);
+                            for (var i = 0; i < bytes.byteLength; i++) {
+                                data += String.fromCharCode(bytes[i]);
+                            }
+                            GetTableFromExcel(data);
+                        };
+                        reader.readAsArrayBuffer(fileUpload.files[0]);
+                    }
+                } else {
+                    alert("This browser does not support HTML5.");
+                }
+            } else {
+                alert("Please upload a valid Excel file.");
+            }
+        }
+
+        function GetTableFromExcel(data) {
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+
+            var Sheet = workbook.SheetNames[0];
+
+            var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+
+            select_columns(excelRows);
+        }
+
+        function select_columns(datas) {
+            let columns = Object.keys(datas[0]);
+
+            $("#selectColumns").empty();
+
+            let type_graph = [
+                'bar',
+                'bubble',
+                'doughnut',
+                'line',
+                'scatter',
+                'polarArea',
+                'radar',
+                'scatter'
+            ];
+
+            //Type de graphique
+            let selectType = document.createElement("select");
+            selectType.id = "selectType";
+            let optionType = document.createElement("option");
+            optionType.value = "";
+            optionType.innerHTML = "Type";
+            selectType.append(optionType);
+
+            for(let i=0; i<type_graph.length; i++){
+                let optionType = document.createElement("option");
+                optionType.value = type_graph[i];
+                optionType.innerHTML = type_graph[i];
+                selectType.append(optionType);
+            }
+
+            //Axe X
+            let selectX = document.createElement("select");
+            selectX.id = "selectX";
+            let optionInitX = document.createElement("option");
+            optionInitX.value = "";
+            optionInitX.innerHTML = "Abscisses";
+            selectX.append(optionInitX);
+
+            for(let i=0; i<columns.length; i++){
+                let optionX = document.createElement("option");
+                optionX.value = columns[i];
+                optionX.innerHTML = columns[i];
+                selectX.append(optionX);
+            }
+
+            //Axe Y
+            let selectY = document.createElement("select");
+            selectY.id = "selectY";
+            let optionInit = document.createElement("option");
+            optionInit.value = "";
+            optionInit.innerHTML = "Ordonnées";
+            selectY.append(optionInit);
+
+            for(let i=0; i<columns.length; i++){
+                let option = document.createElement("option");
+                option.value = columns[i];
+                option.innerHTML = columns[i];
+                selectY.append(option);
+            }
+
+
+            let submit = document.createElement("button");
+            submit.innerHTML = "Sélectionner";
+            submit.addEventListener('click', function(){
+                collect_data(datas);
+            });
+
+            $("#selectColumns").append(selectType, selectX, selectY, submit);
+            $("#selectColumns").show();
+        }
+
+        function collect_data(datas){
+            // X
+            const selectX = document.getElementById('selectX');
+            const iX = selectX.selectedIndex;
+            const optionX = selectX.options[iX].value;
+
+            // Y
+            const selectY = document.getElementById('selectY');
+            const iY = selectY.selectedIndex;
+            const optionY = selectY.options[iY].value;
+
+            // Type Graphique
+            const selectType = document.getElementById('selectType');
+            const iType = selectType.selectedIndex;
+            const optionType = selectType.options[iType].value;
+
+            let datasX = [];
+            let datasY = [];
+            datas.map(x => {
+                if(x[optionX] !== undefined) datasX.push(x[optionX]);
+            })
+
+            datas.map(y => {
+                if(y[optionY] !== undefined) datasY.push(y[optionY]);
+            })
+            generate_graph(optionType, datasX, datasY);
+        }
+
+    </script>
+
+    <script>
+        function generate_graph(type, dataX, dataY) {
+            let chartStatus = Chart.getChart("myChart");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
+
+            $("#div_graph").show();
+
+            const data = {
+                labels: dataX,
+                datasets: [{
+                    backgroundColor: 'rgb(6,28,51)',
+                    borderColor: 'rgb(52,109,109)',
+                    data: dataY,
+                }]
+            };
+
+            const config = {
+                type: type,
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+            };
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+            $("#generate_rapport").show();
+        }
+    </script>
+
+    <script>
+        function generate_pdf(){
+            const doc = new jsPDF({
+                unit: "in",
+                format: [8.5,11]
+            });
+
+            doc.text("Rapport", 1, 1);
+            doc.text("PARTIE 1 = Score 1 Hydratant", 1, 1);
+            doc.text("PARTIE 2 = Score 2 Antioxydant", 1, 1);
+            doc.save("rapport.pdf");
+        }
+    </script>
+
+
+
+{% endblock %}
