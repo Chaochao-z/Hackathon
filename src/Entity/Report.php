@@ -43,7 +43,7 @@ class Report
     private $user;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $Created_at;
 
@@ -112,16 +112,15 @@ class Report
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    public function setCreatedAt()
     {
-        $this->Created_at = $Created_at;
+        $this->Created_at = new \DateTime();
 
-        return $this;
     }
     
 }

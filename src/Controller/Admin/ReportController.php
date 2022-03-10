@@ -31,6 +31,7 @@ class ReportController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $report->setCreatedAt();
             $entityManager->persist($report);
             $entityManager->flush();
 
