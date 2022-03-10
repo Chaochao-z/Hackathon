@@ -3,37 +3,154 @@
 {% block title %}Report index{% endblock %}
 
 {% block body %}
-    <h1>Report index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Company</th>
-                <th>Product Name</th>
-                <th>Created At</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for report in reports %}
-            <tr>
-                <td>{{ report.id }}</td>     
-                <td>{{ report.User.Company }}</td>
-                <td>{{ report.product }}</td>
-                <td>{{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('admin_report_show', {'id': report.id}) }}">show</a>
-                    <a href="{{ path('admin_report_edit', {'id': report.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="flex flex-row">
 
-    <a href="{{ path('admin_report_new') }}">Create new</a>
+        {{ include('admin/components/navbarAdmin.html.twig') }}
+
+        
+
+        <div class="flex flex-col w-screen px-20">
+            <div class="flex flex-row">
+                <div class="bg-white-200 flex flex-row">
+                    <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
+                        <a href="#" class="text-gray-600 white:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                        </a>
+
+                        <span class="mx-5 text-gray-500 white:text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+
+                        <a href="#" class="text-gray-600 white:text-gray-200 hover:underline">
+                            Client report
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container pt-10 mx-auto px-20">
+                <div class="flex flex-row">
+                    <h1 class="text-3xl w-100 font-semibold text-center text-gray-800 capitalize lg:text-4xl white:text-white ">List of <span class="text-blue-500">Client Report</span></h1>
+                </div>
+                
+                <div class="flex-row justify-end pt-10">
+                    <a class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600 " href="{{ path('admin_report_new') }}">Create new</a>
+                </div>
+                
+                <div class="flex flex-row pt-5">
+                    
+                    <div>
+                        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                            <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                                <table class="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Id
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Company
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Product name
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Creat At
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Actions
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for report in reports %}
+                                        <tr>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <div class="flex items-center">
+                                                    
+                                                        <div>
+                                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                                {{ report.id }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                {{ report.User.Company }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ report.product }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
+                                                <a href="{{ path('admin_report_show', {'id': report.id}) }}">
+                                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+                                                        <g transform="scale(.04166)">
+                                                            <path fill="none" d="M0 0h24v24H0V0Z"></path>
+                                                            <path fill="#263FA9" d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34 -.47-2.78-2.79-5-5.59-5.34 -4.23-.52-7.79 3.04-7.27 7.27 .34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14Zm-6 0C7.01 14 5 11.99 5 9.5 5 7.01 7.01 5 9.5 5 11.99 5 14 7.01 14 9.5c0 2.49-2.01 4.5-4.5 4.5Z"></path>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('admin_report_edit', {'id': report.id}) }}">
+                                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+                                                        <g transform="scale(.04166)">
+                                                            <path fill="none" d="M0 0h24v24H0Z"></path>
+                                                            <path fill="#263FA9" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"></path>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="7">no records found</td>
+                                            </tr>
+                                        {% endfor %}        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+         
+
+
+        
+
+        
+
+        
+
+
+    </div>
 {% endblock %}
