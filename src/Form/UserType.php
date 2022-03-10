@@ -18,6 +18,7 @@ class UserType extends AbstractType
             ->add('isVerified')
             ->add('firstname')
             ->add('username')
+            ->add('company')
         ;
     }
 

@@ -66,6 +66,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $created_at;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Company;
+
     public function __construct()
     {
         $this->reports = new ArrayCollection();
@@ -208,5 +213,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->created_at = new \DateTime();
 
 
+    }
+
+    public function getCompany(): ?string
+    {
+        return $this->Company;
+    }
+
+    public function setCompany(?string $Company): self
+    {
+        $this->Company = $Company;
+
+        return $this;
     }
 }
