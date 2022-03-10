@@ -40,7 +40,12 @@ class Report
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      */
-    private $user_id;
+    private $user;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $Created_at;
 
     public function getId(): ?int
     {
@@ -95,15 +100,28 @@ class Report
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->Created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    {
+        $this->Created_at = $Created_at;
+
+        return $this;
+    }
+    
 }
