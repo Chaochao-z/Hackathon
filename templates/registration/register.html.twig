@@ -7,17 +7,60 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <div class="flex flex-row">
 
-    {{ form_start(registrationForm) }}
+    {{ include('admin/components/navbarAdmin.html.twig') }}
+
+        <div>
+            <div class="bg-white-200">
+                <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
+                    <a href="#" class="text-gray-600 white:text-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                        </svg>
+                    </a>
+
+                    <span class="mx-5 text-gray-500 white:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+
+                    <a href="#" class="text-gray-600 white:text-gray-200 hover:underline">
+                        Client account
+                    </a>
+
+                    <span class="mx-5 text-gray-500 white:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+
+                    <a href="#" class="text-blue-600 white:text-blue-400 hover:underline">
+                        Add new client
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    {# {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.firstname) }}
         {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.agreeTerms) }} #}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+
+
+
+
+        {# <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }} #}
 {% endblock %}
