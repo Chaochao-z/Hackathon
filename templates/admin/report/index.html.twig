@@ -9,10 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Product</th>
-                <th>Path</th>
+                <th>Company</th>
+                <th>Product Name</th>
                 <th>Created At</th>
                 <th>actions</th>
             </tr>
@@ -20,11 +18,9 @@
         <tbody>
         {% for report in reports %}
             <tr>
-                <td>{{ report.id }}</td>
-                <td>{{ report.name }}</td>
-                <td>{{ report.description }}</td>
+                <td>{{ report.id }}</td>     
+                <td>{{ report.User.Company }}</td>
                 <td>{{ report.product }}</td>
-                <td>{{ report.path }}</td>
                 <td>{{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('admin_report_show', {'id': report.id}) }}">show</a>

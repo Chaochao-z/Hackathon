@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Report;
+use App\Entity\User;
 use App\Form\ReportType;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ class ReportController extends AbstractController
     public function index(ReportRepository $reportRepository): Response
     {
         return $this->render('admin/report/index.html.twig', [
-            'reports' => $reportRepository->findAll(),
+            'reports' => $reportRepository->findAll()
         ]);
     }
 

@@ -55,14 +55,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $username;
 
     /**
-     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="user")
      */
     private $reports;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime
-     * @var string A "Y-m-d H:i:s" formatted value
      */
     private $created_at;
 
@@ -226,4 +224,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    // public function __toString() {
+    //     return $this->id;
+    // }
 }
