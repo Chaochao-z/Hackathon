@@ -4,9 +4,17 @@
 
 {% block body %}
 
-FirstName  {{ user.firstname }}
+<div class="flex flex-row">
+
+        {{ include('admin/components/navbarUser.html.twig') }}
+
+        FirstName  {{ user.firstname }}
 LastName  {{ user.username }}
 eMail {{ user.email }}
 Company {{ user.company }}
+
+</div>
+
+
 
 {% endblock  %}
