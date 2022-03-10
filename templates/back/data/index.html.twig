@@ -4,24 +4,50 @@
 
 {% block body %}
 
-    <h1>PARTIE 1 = Score 1 Hydratant</h1>
+    <p class="normal-case">
+        Create New <span style="color: blue">Data Report</span>
+    </p>
+    <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md white:bg-gray-800">
+        <h2 class="text-lg font-semibold text-gray-700 capitalize white:text-white">New Data Report</h2>
 
-    <input type="file" id="fileUpload"/>
-    <button id="upload" value="Upload" onclick="UploadProcess()">upload</button>
+        <div class="flex justify-center">
+            <div class="mb-3 w-96">
 
-    <div>
-        <div id="selectColumns" style="display: none">
+            </div>
         </div>
+        <form>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <div>
+                    <input type="file" id="fileUpload"/>
+                    <button id="upload" value="Upload" onclick="UploadProcess()">upload</button>
+                </div>
+                <div>
+                    <div id="select_worksheet" style="display: none">
+                        <input id="worksheetnumber" type="number" placeholder="Quel onglet choisir?" />
+                        <button id="worksheet_selection">Choisir</button>
+                    </div>
+                    <div id="selectColumns" style="display: none">
+                    </div>
 
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-6">
+                <button class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
+            </div>
+        </form>
+    </section>
+
+    <section>
         <div id="div_graph" style="display: none">
             <canvas id="myChart" height="10" width="50"></canvas>
         </div>
-    </div>
+    </section>
 
+    <section>
+        <button id="generate_rapport" style="display: none" onclick="generate_pdf()">Générer un rapport</button>
 
-
-    <button id="generate_rapport" style="display: none" onclick="generate_pdf()">Générer un rapport</button>
-
+    </section>
     <script>
 
         function UploadProcess() {
@@ -61,15 +87,19 @@
         }
 
         function GetTableFromExcel(data) {
-            var workbook = XLSX.read(data, {
-                type: 'binary'
-            });
 
-            var Sheet = workbook.SheetNames[0];
+            $("#select_worksheet").show();
+            $("#worksheet_selection").click(function() {
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
 
-            var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
-
-            select_columns(excelRows);
+                var Sheet = workbook.SheetNames[$("#worksheetnumber").val()];
+                if(Sheet !== undefined) {
+                    var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+                    select_columns(excelRows);
+                }else alert("Onglet dans le fichier Excel inexistant");
+            })
         }
 
         function select_columns(datas) {
@@ -216,15 +246,16 @@
 
     <script>
         function generate_pdf(){
-            const doc = new jsPDF({
-                unit: "in",
-                format: [8.5,11]
-            });
+            var canvas = document.querySelector('#myChart');
+            //creates image
+            var canvasImg = canvas.toDataURL("image/jpeg", 1.0);
 
-            doc.text("Rapport", 1, 1);
-            doc.text("PARTIE 1 = Score 1 Hydratant", 1, 1);
-            doc.text("PARTIE 2 = Score 2 Antioxydant", 1, 1);
-            doc.save("rapport.pdf");
+            //creates PDF from img
+            var doc = new jsPDF('landscape');
+            doc.setFontSize(20);
+            doc.text(15, 15, "Cool Chart");
+            doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
+            doc.save('rapport.pdf');
         }
     </script>
 
