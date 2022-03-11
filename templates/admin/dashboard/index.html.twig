@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ClientController!{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block body %}
 
-
-
-
 <div class="flex flex-row">
 
-    {{ include('admin/components/navbarUser.html.twig') }}
+    {{ include('admin/components/navbarAdmin.html.twig') }}
     <div class="flex flex-col w-screen px-20">
             <div class="flex flex-row">
                 <div class="bg-white-200 flex flex-row">
@@ -32,7 +29,7 @@
             </div>
             <div class="container pt-10 mx-auto px-20">
                 <div class="flex flex-row">
-                    <h1 class="text-3xl w-100 font-semibold text-center text-gray-800 capitalize lg:text-4xl white:text-white ">Dashboard <span class="text-blue-500">User</span></h1>
+                    <h1 class="text-3xl w-100 font-semibold text-center text-gray-800 capitalize lg:text-4xl white:text-white ">Dashboard <span class="text-blue-500">Admin</span></h1>
                 </div>
             </div>
     </div>
