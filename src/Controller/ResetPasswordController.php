@@ -155,7 +155,6 @@ class ResetPasswordController extends AbstractController
             //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
             //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
             // ));
-
             return $this->redirectToRoute('app_check_email');
         }
 
@@ -168,9 +167,9 @@ class ResetPasswordController extends AbstractController
                 'resetToken' => $resetToken,
             ])
         ;
-
+        
         $mailer->send($email);
-
+        return $this->redirectToRoute('app_login');
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
