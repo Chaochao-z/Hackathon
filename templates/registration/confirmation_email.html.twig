@@ -6,14 +6,18 @@
             <h1>Your Account Pro WIRED BEAUTY WELCOME</h1>
         </div>
         <h1 style="font-size: 15px;">Hello {{ username }},</h1>
-        <p>pazj  kazdjkkazjd kqjdskdjkaz kzjdkj qs ksdjkqdjk azk djkazj kjdq ksjd </p>
-        <p>Login: {{ email }}</p>
-        <p>Password : </p>
+        <p>We confirm that your customer area has been created !</p>
+        <p>You will find your identifiers below to keep very preciously:</p>
+        <p>Login: {{ mail }}</p>
+        <p>Password : {{ password }} </p>
 
     
 
     <p>
-        Please confirm your email address by clicking the following link: <br><br>
+        Please note, you must confirm your email address to freely access your Dashboard 🚨</p>
+
+<p>See you soon on your reports! 👋 </p>
+    </p>
         <a href="{{ signedUrl }}">Confirm my Email</a>.
         This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
     </p>
