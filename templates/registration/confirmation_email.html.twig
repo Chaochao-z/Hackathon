@@ -1,11 +1,25 @@
-<h1>Hi! Please confirm your email!</h1>
+<center>
+        <div>
+            <img src="https://i.ibb.co/TKRfdhS/logoWB.png" class="m-auto font-sans">
+        </div>
+        <div style="background-color: #C7DCF2;width: 100%;padding: 10px;font-size: 10px;margin-bottom: 25px;">
+            <h1>Your Account Pro WIRED BEAUTY WELCOME</h1>
+        </div>
+        <h1 style="font-size: 15px;">Hello {{ username }},</h1>
+        <p>pazj  kazdjkkazjd kqjdskdjkaz kzjdkj qs ksdjkqdjk azk djkazj kjdq ksjd </p>
+        <p>Login: {{ email }}</p>
+        <p>Password : </p>
 
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl }}">Confirm my Email</a>.
-    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
+    
 
-<p>
-    Cheers!
-</p>
+    <p>
+        Please confirm your email address by clicking the following link: <br><br>
+        <a href="{{ signedUrl }}">Confirm my Email</a>.
+        This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+    </p>
+    
+    <p>
+        Cheers!
+    </p>
+    </center>
+
