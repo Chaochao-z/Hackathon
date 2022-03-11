@@ -4,27 +4,16 @@
 
 {% block body %}
 
-    <p class="normal-case">
-        Create New <span style="color: blue">Data Report</span>
-    </p>
-    <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md white:bg-gray-800">
-        <h2 class="text-lg font-semibold text-gray-700 capitalize white:text-white">New Data Report</h2>
 
-        <div class="flex justify-center">
-            <div class="mb-3 w-96">
-
-            </div>
-        </div>
-        <form>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
-                    <input type="file" id="fileUpload"/>
-                    <button id="upload" value="Upload" onclick="UploadProcess()">upload</button>
+                    <input type="file" id="fileUpload" class="border-dashed"/>
+                    <button class="inline-block px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" id="upload" value="Upload" onclick="UploadProcess()">upload</button>
                 </div>
                 <div>
                     <div id="select_worksheet" style="display: none">
                         <input id="worksheetnumber" type="number" placeholder="Quel onglet choisir?" />
-                        <button id="worksheet_selection">Choisir</button>
+                            <button id="worksheet_selection" class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Choisir</button>
                     </div>
                     <div id="selectColumns" style="display: none">
                     </div>
@@ -32,20 +21,17 @@
                 </div>
             </div>
 
-            <div class="flex justify-end mt-6">
-                <button class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
-            </div>
-        </form>
+
     </section>
 
     <section>
         <div id="div_graph" style="display: none">
-            <canvas id="myChart" height="10" width="50"></canvas>
+            <canvas id="myChart"></canvas>
         </div>
     </section>
 
     <section>
-        <button id="generate_rapport" style="display: none" onclick="generate_pdf()">Générer un rapport</button>
+        <button class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" id="generate_rapport" style="display: none" onclick="generate_pdf()">Générer un rapport</button>
 
     </section>
     <script>
@@ -90,19 +76,66 @@
 
             $("#select_worksheet").show();
             $("#worksheet_selection").click(function() {
-                var workbook = XLSX.read(data, {
+                let workbook = XLSX.read(data, {
                     type: 'binary'
                 });
 
-                var Sheet = workbook.SheetNames[$("#worksheetnumber").val()];
+                let Sheet = workbook.SheetNames[$("#worksheetnumber").val()];
                 if(Sheet !== undefined) {
-                    var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
-                    select_columns(excelRows);
+                    let excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+                    let product = select_product(excelRows, "select_product");
+                    select_columns(excelRows, product);
                 }else alert("Onglet dans le fichier Excel inexistant");
             })
         }
 
-        function select_columns(datas) {
+        function select_product(datas, id){
+            let products = [];
+            datas.map(x => {
+                if(x["product_code"] !== undefined) products.push(x["product_code"]);
+            })
+            products = [...new Set(products)];
+
+            let selectX = document.createElement("select");
+            selectX.id = id;
+            let optionInitX = document.createElement("option");
+            optionInitX.value = "";
+            optionInitX.innerHTML = "Choose product";
+            selectX.append(optionInitX);
+
+            for(let i=0; i<products.length; i++){
+                let optionX = document.createElement("option");
+                optionX.value = products[i];
+                optionX.innerHTML = products[i];
+                selectX.append(optionX);
+            }
+            return selectX;
+        }
+
+        function random_rgba() {
+            var o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+        }
+
+        var color = random_rgba();
+
+        let datasets = [];
+
+        function dataset_empty(){
+            datasets.length = 0;
+        }
+        function add_dataSet(dataY, legend){
+            datasets.push(
+                {
+                    label: legend,
+                    backgroundColor: random_rgba(),
+                    borderColor: random_rgba(),
+                    data: dataY,
+                }
+            )
+        }
+
+        function select_columns(datas, product) {
             let columns = Object.keys(datas[0]);
 
             $("#selectColumns").empty();
@@ -165,12 +198,29 @@
 
 
             let submit = document.createElement("button");
+            let classes = "inline-block px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out";
+            classes = classes.split(' ');
+            submit.classList.add(...classes);
             submit.innerHTML = "Sélectionner";
+            submit.id = "generation";
+
+            let compare = document.createElement("button");
+            let classes_compare = "inline-block px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out";
+            classes_compare = classes_compare.split(' ');
+            compare.classList.add(...classes_compare);
+            compare.innerHTML = "Comparer avec un autre produit";
+            compare.id="comparebtn";
+            compare.style.display = "none";
+
             submit.addEventListener('click', function(){
-                collect_data(datas);
+                collect_data(datas, product);
+                $("#comparebtn").show();
+            });
+            compare.addEventListener('click', function(){
+                compare_product(datas);
             });
 
-            $("#selectColumns").append(selectType, selectX, selectY, submit);
+            $("#selectColumns").append(selectType, product, selectX, selectY, submit, compare);
             $("#selectColumns").show();
         }
 
@@ -190,22 +240,51 @@
             const iType = selectType.selectedIndex;
             const optionType = selectType.options[iType].value;
 
+            // Produit
+            const selectProduct = document.getElementById('select_product');
+            const iP = selectProduct.selectedIndex;
+            const optionP = selectProduct.options[iP].value;
+
+            const selectProduct2 = document.getElementById('select_product2');
+
+
+            let title_graphique = "Graphique représentant le " + optionX + " en fonction de " + optionY;
             let datasX = [];
             let datasY = [];
+            let datasY2 = [];
+
             datas.map(x => {
-                if(x[optionX] !== undefined) datasX.push(x[optionX]);
+                if(x[optionX] !== undefined && x["product_code"] === optionP) datasX.push(x[optionX]);
             })
 
             datas.map(y => {
-                if(y[optionY] !== undefined) datasY.push(y[optionY]);
+                if(y[optionY] !== undefined && y["product_code"] === optionP) datasY.push(y[optionY]);
             })
-            generate_graph(optionType, datasX, datasY);
+
+            datas.map(y => {
+                if(selectProduct2 !== null) {
+                    const iP2 = selectProduct2.selectedIndex;
+                    const optionP2 = selectProduct2.options[iP2].value;
+                    if (optionP2 !== undefined)
+                        if (y[optionY] !== undefined && y["product_code"] === optionP2) datasY2.push(y[optionY]);
+                }
+            })
+
+            dataset_empty();
+            add_dataSet(datasY, "");
+            add_dataSet(datasY2, "");
+            generate_graph(optionType, datasX, datasets, title_graphique);
+        }
+
+        function compare_product(datas){
+            let select_another_product = select_product(datas, "select_product2");
+            $("#selectColumns").append(select_another_product);
         }
 
     </script>
 
     <script>
-        function generate_graph(type, dataX, dataY) {
+        function generate_graph(type, dataX, dataSets, title) {
             let chartStatus = Chart.getChart("myChart");
             if (chartStatus !== undefined) {
                 chartStatus.destroy();
@@ -213,24 +292,32 @@
 
             $("#div_graph").show();
 
-            const data = {
+            let data = {
                 labels: dataX,
-                datasets: [{
-                    backgroundColor: 'rgb(6,28,51)',
-                    borderColor: 'rgb(52,109,109)',
-                    data: dataY,
-                }]
+                datasets: dataSets
             };
-
             const config = {
                 type: type,
                 data: data,
                 options: {
                     plugins: {
+                        title: {
+                            display: true,
+                            text: title
+                        },
                         legend: {
-                            display: false,
+                            display: true,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
                         }
                     }
+
                 },
                 responsive: true,
                 maintainAspectRatio: false,
@@ -241,6 +328,7 @@
                 config
             );
             $("#generate_rapport").show();
+            return data.datasets;
         }
     </script>
 
@@ -248,12 +336,12 @@
         function generate_pdf(){
             var canvas = document.querySelector('#myChart');
             //creates image
-            var canvasImg = canvas.toDataURL("image/jpeg", 1.0);
+            var canvasImg = canvas.toDataURL("image/png", 1.0);
 
             //creates PDF from img
             var doc = new jsPDF('landscape');
             doc.setFontSize(20);
-            doc.text(15, 15, "Cool Chart");
+            doc.text(15, 15, "Rapport");
             doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
             doc.save('rapport.pdf');
         }
