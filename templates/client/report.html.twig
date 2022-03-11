@@ -3,35 +3,123 @@
 {% block title %}Report index{% endblock %}
 
 {% block body %}
-    <h1>Report index</h1>
+    <div class="flex flex-row">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Company</th>
-                <th>Product Name</th>
-                <th>Created At</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for report in reports %}
-            <tr>
-                <td>{{ report.id }}</td>     
-                <td>{{ report.User.Company }}</td>
-                <td>{{ report.product }}</td>
-                <td>{{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="#">Download</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        {{ include('admin/components/navbarUser.html.twig') }}
+        <div class="flex flex-col w-screen px-20">
+            <div class="flex flex-row">
+                <div class="bg-white-200 flex flex-row">
+                    <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
+                        <a href="#" class="text-gray-600 white:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                        </a>
 
+                        <span class="mx-5 text-gray-500 white:text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+
+                        <a href="#" class="text-gray-600 white:text-gray-200 hover:underline">
+                            My Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container pt-10 mx-auto px-20">
+                <div class="flex flex-row">
+                    <h1 class="text-3xl w-100 font-semibold text-center text-gray-800 capitalize lg:text-4xl white:text-white ">List of <span class="text-blue-500">My Report</span></h1>
+                </div>
+                
+                
+                
+                <div class="flex flex-row pt-5">
+                    
+                    <div>
+                        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                            <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                                <table class="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Id
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Company
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Product name
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Creat At
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for report in reports %}
+                                        <tr>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <div class="flex items-center">
+                                                    
+                                                        <div>
+                                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                                {{ report.id }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                {{ report.User.Company }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ report.product }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ report.CreatedAt ? report.CreatedAt|date('Y-m-d H:i:s') : '' }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
+                                                <a href="#">
+                                                    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                        <path fill="none" d="M0 0h24v24H0V0Z"></path>
+                                                        <path fill="#263FA9" d="M16.59 9H15V4c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v5H7.41c-.89 0-1.34 1.08-.71 1.71l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.63-.63.19-1.71-.7-1.71ZM5 19c0 .55.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1Z"></path>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="7">no records found</td>
+                                            </tr>
+                                        {% endfor %}        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+
