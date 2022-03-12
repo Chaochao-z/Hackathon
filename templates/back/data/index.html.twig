@@ -3,350 +3,413 @@
 {% block title %} Upload {% endblock %}
 
 {% block body %}
+<div class="flex flex-row">
 
 
-            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                <div>
-                    <input type="file" id="fileUpload" class="border-dashed"/>
-                    <button class="inline-block px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" id="upload" value="Upload" onclick="UploadProcess()">upload</button>
-                </div>
-                <div>
-                    <div id="select_worksheet" style="display: none">
-                        <input id="worksheetnumber" type="number" placeholder="Quel onglet choisir?" />
-                            <button id="worksheet_selection" class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Choisir</button>
-                    </div>
-                    <div id="selectColumns" style="display: none">
-                    </div>
+    {{ include('admin/components/navbarAdmin.html.twig') }}
 
-                </div>
+    <div class="flex flex-col w-screen">
+        <div class="bg-white-200 flex flex-row">
+            <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
+                <a href="#" class="text-gray-600 white:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                </a>
+
+                <span class="mx-5 text-gray-500 white:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </span>
+
+                <a href="#" class="text-gray-600 white:text-gray-200 hover:underline">
+                    Client account
+                </a>
+
+                <span class="mx-5 text-gray-500 white:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </span>
+
+                <a href="#" class="text-blue-600 white:text-blue-400 hover:underline">
+                    New Data Report
+                </a>
             </div>
-
-
-    </section>
-
-    <section>
-        <div id="div_graph" style="display: none">
-            <canvas id="myChart"></canvas>
         </div>
-    </section>
 
-    <section>
-        <button class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" id="generate_rapport" style="display: none" onclick="generate_pdf()">Générer un rapport</button>
+        <div class="justify-center">
+            <section class="bg-white white:bg-gray-900">
+                <div class="container py-10 mx-auto">
+                    <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl white:text-white">
+                        Create New <span class="text-blue-500">Data Report</span></h1>
 
-    </section>
-    <script>
+                    <div class=" gap-8 mt-8 w-[1000px] pl-[33%]">
+                        <div class="flex flex-col items-center p-6 space-y-3 bg-gray-100 rounded-xl white:bg-gray-800 content-center">
+                                <span class="inline-block p-3 text-blue-500 bg-blue-100 rounded-full white:text-white white:bg-blue-500">
+                                    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+                                        <g transform="scale(.04166)">
+                                            <path fill="none" d="M0 0h24v24H0Z"></path>
+                                            <path fill="#4E80EF"
+                                                  d="M13 8c0-2.21-1.79-4-4-4C6.79 4 5 5.79 5 8c0 2.21 1.79 4 4 4s4-1.79 4-4Zm2 2v2h3v3h2v-3h3v-2h-3V7h-2v3h-3ZM1 18v2h16v-2c0-2.66-5.33-4-8-4s-8 1.34-8 4Z"></path>
+                                        </g>
+                                    </svg>
+                                </span>
 
-        function UploadProcess() {
-            //Reference the FileUpload element.
-            var fileUpload = document.getElementById("fileUpload");
+                            <h1 class="text-2xl font-semibold text-gray-700 capitalize white:text-white">New
+                                Data Report</h1>
+                            <input type="file" id="fileUpload"/>
+                            <button id="upload" type="button"
+                                    onclick="UploadProcess()"
+                                    class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600"
+                            >
+                                Upload
+                            </button>
 
-            //Validate whether File is valid Excel file.
-            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
-            if (regex.test(fileUpload.value.toLowerCase())) {
-                if (typeof (FileReader) != "undefined") {
-                    var reader = new FileReader();
+                            <div class="mx-auto" id="select_worksheet" style="display: none">
+                                <div class="input-group">
+                                    <div>
+                                        <input id="worksheetnumber" type="number"
+                                               placeholder="Quel onglet choisir?"/>
+                                        <button id="worksheet_selection"
+                                        class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600"
+                                        >Choisir</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="selectColumns" style="display: none">
+                            </div>
 
-                    //For Browsers other than IE.
-                    if (reader.readAsBinaryString) {
-                        reader.onload = function (e) {
-                            GetTableFromExcel(e.target.result);
-                        };
-                        reader.readAsBinaryString(fileUpload.files[0]);
-                    } else {
-                        //For IE Browser.
-                        reader.onload = function (e) {
-                            var data = "";
-                            var bytes = new Uint8Array(e.target.result);
-                            for (var i = 0; i < bytes.byteLength; i++) {
-                                data += String.fromCharCode(bytes[i]);
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="div_graph" style="display: none">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+
+                <button id="generate_rapport" style="display: none" class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600" onclick="generate_pdf()">Générer
+                    un rapport
+                </button>
+                <script>
+
+
+                    function UploadProcess() {
+                        //Reference the FileUpload element.
+                        var fileUpload = document.getElementById("fileUpload");
+
+                        //Validate whether File is valid Excel file.
+                        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
+                        if (regex.test(fileUpload.value.toLowerCase())) {
+                            if (typeof (FileReader) != "undefined") {
+                                var reader = new FileReader();
+
+                                //For Browsers other than IE.
+                                if (reader.readAsBinaryString) {
+                                    reader.onload = function (e) {
+                                        GetTableFromExcel(e.target.result);
+                                    };
+                                    reader.readAsBinaryString(fileUpload.files[0]);
+                                } else {
+                                    //For IE Browser.
+                                    reader.onload = function (e) {
+                                        var data = "";
+                                        var bytes = new Uint8Array(e.target.result);
+                                        for (var i = 0; i < bytes.byteLength; i++) {
+                                            data += String.fromCharCode(bytes[i]);
+                                        }
+                                        GetTableFromExcel(data);
+                                    };
+                                    reader.readAsArrayBuffer(fileUpload.files[0]);
+                                }
+                            } else {
+                                alert("This browser does not support HTML5.");
                             }
-                            GetTableFromExcel(data);
+                        } else {
+                            alert("Please upload a valid Excel file.");
+                        }
+                    }
+
+                    function GetTableFromExcel(data) {
+
+                        $("#select_worksheet").show();
+                        $("#worksheet_selection").click(function () {
+                            let workbook = XLSX.read(data, {
+                                type: 'binary'
+                            });
+
+                            let Sheet = workbook.SheetNames[$("#worksheetnumber").val()];
+                            if (Sheet !== undefined) {
+                                let excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+                                let product = select_product(excelRows, "select_product");
+                                select_columns(excelRows, product);
+                            } else alert("Onglet dans le fichier Excel inexistant");
+                        })
+                    }
+
+                    function select_product(datas, id) {
+                        let products = [];
+                        datas.map(x => {
+                            if (x["product_code"] !== undefined) products.push(x["product_code"]);
+                        })
+                        products = [...new Set(products)];
+
+                        let selectX = document.createElement("select");
+                        selectX.id = id;
+                        let optionInitX = document.createElement("option");
+                        optionInitX.value = "";
+                        optionInitX.innerHTML = "Choose product";
+                        selectX.append(optionInitX);
+
+                        for (let i = 0; i < products.length; i++) {
+                            let optionX = document.createElement("option");
+                            optionX.value = products[i];
+                            optionX.innerHTML = products[i];
+                            selectX.append(optionX);
+                        }
+                        return selectX;
+                    }
+
+                    function random_rgba() {
+                        var o = Math.round, r = Math.random, s = 255;
+                        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+                    }
+
+                    var color = random_rgba();
+
+                    let datasets = [];
+
+                    function dataset_empty() {
+                        datasets.length = 0;
+                    }
+
+                    function add_dataSet(dataY, legend) {
+                        datasets.push(
+                            {
+                                label: legend,
+                                backgroundColor: random_rgba(),
+                                borderColor: random_rgba(),
+                                data: dataY,
+                            }
+                        )
+                    }
+
+                    function select_columns(datas, product) {
+                        let columns = Object.keys(datas[0]);
+
+                        $("#selectColumns").empty();
+
+                        let type_graph = [
+                            'bar',
+                            'bubble',
+                            'doughnut',
+                            'line',
+                            'scatter',
+                            'polarArea',
+                            'radar',
+                            'scatter'
+                        ];
+
+                        //Type de graphique
+                        let selectType = document.createElement("select");
+                        selectType.id = "selectType";
+                        let optionType = document.createElement("option");
+                        optionType.value = "";
+                        optionType.innerHTML = "Type";
+                        selectType.append(optionType);
+
+                        for (let i = 0; i < type_graph.length; i++) {
+                            let optionType = document.createElement("option");
+                            optionType.value = type_graph[i];
+                            optionType.innerHTML = type_graph[i];
+                            selectType.append(optionType);
+                        }
+
+                        //Axe X
+                        let selectX = document.createElement("select");
+                        selectX.id = "selectX";
+                        let optionInitX = document.createElement("option");
+                        optionInitX.value = "";
+                        optionInitX.innerHTML = "Abscisses";
+                        selectX.append(optionInitX);
+
+                        for (let i = 0; i < columns.length; i++) {
+                            let optionX = document.createElement("option");
+                            optionX.value = columns[i];
+                            optionX.innerHTML = columns[i];
+                            selectX.append(optionX);
+                        }
+
+                        //Axe Y
+                        let selectY = document.createElement("select");
+                        selectY.id = "selectY";
+                        let optionInit = document.createElement("option");
+                        optionInit.value = "";
+                        optionInit.innerHTML = "Ordonnées";
+                        selectY.append(optionInit);
+
+                        for (let i = 0; i < columns.length; i++) {
+                            let option = document.createElement("option");
+                            option.value = columns[i];
+                            option.innerHTML = columns[i];
+                            selectY.append(option);
+                        }
+
+
+                        let submit = document.createElement("button");
+                        submit.innerHTML = "Sélectionner";
+                        submit.id = "generation";
+                        let classes = "btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600";
+                        classes = classes.split(' ');
+                        submit.classList.add(...classes);
+
+                        let compare = document.createElement("button");
+                        compare.innerHTML = "Comparer avec un autre produit";
+                        compare.id = "comparebtn";
+                        compare.style.display = "none";
+                        compare.classList.add(...classes);
+
+                        submit.addEventListener('click', function () {
+                            collect_data(datas, product);
+                            $("#comparebtn").show();
+                        });
+                        compare.addEventListener('click', function () {
+                            compare_product(datas);
+                        });
+
+                        $("#selectColumns").append(selectType, product, selectX, selectY, submit, compare);
+                        $("#selectColumns").show();
+                    }
+
+                    function collect_data(datas) {
+                        // X
+                        const selectX = document.getElementById('selectX');
+                        const iX = selectX.selectedIndex;
+                        const optionX = selectX.options[iX].value;
+
+                        // Y
+                        const selectY = document.getElementById('selectY');
+                        const iY = selectY.selectedIndex;
+                        const optionY = selectY.options[iY].value;
+
+                        // Type Graphique
+                        const selectType = document.getElementById('selectType');
+                        const iType = selectType.selectedIndex;
+                        const optionType = selectType.options[iType].value;
+
+                        // Produit
+                        const selectProduct = document.getElementById('select_product');
+                        const iP = selectProduct.selectedIndex;
+                        const optionP = selectProduct.options[iP].value;
+
+                        const selectProduct2 = document.getElementById('select_product2');
+
+
+                        let title_graphique = "Graphique représentant le " + optionX + " en fonction de " + optionY;
+                        let datasX = [];
+                        let datasY = [];
+                        let datasY2 = [];
+
+                        datas.map(x => {
+                            if (x[optionX] !== undefined && x["product_code"] === optionP) datasX.push(x[optionX]);
+                        })
+
+                        datas.map(y => {
+                            if (y[optionY] !== undefined && y["product_code"] === optionP) datasY.push(y[optionY]);
+                        })
+
+                        datas.map(y => {
+                            if (selectProduct2 !== null) {
+                                const iP2 = selectProduct2.selectedIndex;
+                                const optionP2 = selectProduct2.options[iP2].value;
+                                if (optionP2 !== undefined)
+                                    if (y[optionY] !== undefined && y["product_code"] === optionP2) datasY2.push(y[optionY]);
+                            }
+                        })
+
+                        dataset_empty();
+                        add_dataSet(datasY, "");
+                        add_dataSet(datasY2, "");
+                        generate_graph(optionType, datasX, datasets, title_graphique);
+                    }
+
+                    function compare_product(datas) {
+                        let select_another_product = select_product(datas, "select_product2");
+                        $("#selectColumns").append(select_another_product);
+                    }
+
+                </script>
+
+                <script>
+                    function generate_graph(type, dataX, dataSets, title) {
+                        let chartStatus = Chart.getChart("myChart");
+                        if (chartStatus !== undefined) {
+                            chartStatus.destroy();
+                        }
+
+                        $("#div_graph").show();
+
+                        let data = {
+                            labels: dataX,
+                            datasets: dataSets
                         };
-                        reader.readAsArrayBuffer(fileUpload.files[0]);
+                        const config = {
+                            type: type,
+                            data: data,
+                            options: {
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: title
+                                    },
+                                    legend: {
+                                        display: true,
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        beginAtZero: true
+                                    },
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+
+                            },
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        };
+
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                        );
+                        $("#generate_rapport").show();
+                        return data.datasets;
                     }
-                } else {
-                    alert("This browser does not support HTML5.");
-                }
-            } else {
-                alert("Please upload a valid Excel file.");
-            }
-        }
+                </script>
 
-        function GetTableFromExcel(data) {
+                <script>
+                    function generate_pdf() {
+                        var canvas = document.querySelector('#myChart');
+                        //creates image
+                        var canvasImg = canvas.toDataURL("image/png", 1.0);
 
-            $("#select_worksheet").show();
-            $("#worksheet_selection").click(function() {
-                let workbook = XLSX.read(data, {
-                    type: 'binary'
-                });
-
-                let Sheet = workbook.SheetNames[$("#worksheetnumber").val()];
-                if(Sheet !== undefined) {
-                    let excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
-                    let product = select_product(excelRows, "select_product");
-                    select_columns(excelRows, product);
-                }else alert("Onglet dans le fichier Excel inexistant");
-            })
-        }
-
-        function select_product(datas, id){
-            let products = [];
-            datas.map(x => {
-                if(x["product_code"] !== undefined) products.push(x["product_code"]);
-            })
-            products = [...new Set(products)];
-
-            let selectX = document.createElement("select");
-            selectX.id = id;
-            let optionInitX = document.createElement("option");
-            optionInitX.value = "";
-            optionInitX.innerHTML = "Choose product";
-            selectX.append(optionInitX);
-
-            for(let i=0; i<products.length; i++){
-                let optionX = document.createElement("option");
-                optionX.value = products[i];
-                optionX.innerHTML = products[i];
-                selectX.append(optionX);
-            }
-            return selectX;
-        }
-
-        function random_rgba() {
-            var o = Math.round, r = Math.random, s = 255;
-            return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
-        }
-
-        var color = random_rgba();
-
-        let datasets = [];
-
-        function dataset_empty(){
-            datasets.length = 0;
-        }
-        function add_dataSet(dataY, legend){
-            datasets.push(
-                {
-                    label: legend,
-                    backgroundColor: random_rgba(),
-                    borderColor: random_rgba(),
-                    data: dataY,
-                }
-            )
-        }
-
-        function select_columns(datas, product) {
-            let columns = Object.keys(datas[0]);
-
-            $("#selectColumns").empty();
-
-            let type_graph = [
-                'bar',
-                'bubble',
-                'doughnut',
-                'line',
-                'scatter',
-                'polarArea',
-                'radar',
-                'scatter'
-            ];
-
-            //Type de graphique
-            let selectType = document.createElement("select");
-            selectType.id = "selectType";
-            let optionType = document.createElement("option");
-            optionType.value = "";
-            optionType.innerHTML = "Type";
-            selectType.append(optionType);
-
-            for(let i=0; i<type_graph.length; i++){
-                let optionType = document.createElement("option");
-                optionType.value = type_graph[i];
-                optionType.innerHTML = type_graph[i];
-                selectType.append(optionType);
-            }
-
-            //Axe X
-            let selectX = document.createElement("select");
-            selectX.id = "selectX";
-            let optionInitX = document.createElement("option");
-            optionInitX.value = "";
-            optionInitX.innerHTML = "Abscisses";
-            selectX.append(optionInitX);
-
-            for(let i=0; i<columns.length; i++){
-                let optionX = document.createElement("option");
-                optionX.value = columns[i];
-                optionX.innerHTML = columns[i];
-                selectX.append(optionX);
-            }
-
-            //Axe Y
-            let selectY = document.createElement("select");
-            selectY.id = "selectY";
-            let optionInit = document.createElement("option");
-            optionInit.value = "";
-            optionInit.innerHTML = "Ordonnées";
-            selectY.append(optionInit);
-
-            for(let i=0; i<columns.length; i++){
-                let option = document.createElement("option");
-                option.value = columns[i];
-                option.innerHTML = columns[i];
-                selectY.append(option);
-            }
-
-
-            let submit = document.createElement("button");
-            let classes = "inline-block px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out";
-            classes = classes.split(' ');
-            submit.classList.add(...classes);
-            submit.innerHTML = "Sélectionner";
-            submit.id = "generation";
-
-            let compare = document.createElement("button");
-            let classes_compare = "inline-block px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out";
-            classes_compare = classes_compare.split(' ');
-            compare.classList.add(...classes_compare);
-            compare.innerHTML = "Comparer avec un autre produit";
-            compare.id="comparebtn";
-            compare.style.display = "none";
-
-            submit.addEventListener('click', function(){
-                collect_data(datas, product);
-                $("#comparebtn").show();
-            });
-            compare.addEventListener('click', function(){
-                compare_product(datas);
-            });
-
-            $("#selectColumns").append(selectType, product, selectX, selectY, submit, compare);
-            $("#selectColumns").show();
-        }
-
-        function collect_data(datas){
-            // X
-            const selectX = document.getElementById('selectX');
-            const iX = selectX.selectedIndex;
-            const optionX = selectX.options[iX].value;
-
-            // Y
-            const selectY = document.getElementById('selectY');
-            const iY = selectY.selectedIndex;
-            const optionY = selectY.options[iY].value;
-
-            // Type Graphique
-            const selectType = document.getElementById('selectType');
-            const iType = selectType.selectedIndex;
-            const optionType = selectType.options[iType].value;
-
-            // Produit
-            const selectProduct = document.getElementById('select_product');
-            const iP = selectProduct.selectedIndex;
-            const optionP = selectProduct.options[iP].value;
-
-            const selectProduct2 = document.getElementById('select_product2');
-
-
-            let title_graphique = "Graphique représentant le " + optionX + " en fonction de " + optionY;
-            let datasX = [];
-            let datasY = [];
-            let datasY2 = [];
-
-            datas.map(x => {
-                if(x[optionX] !== undefined && x["product_code"] === optionP) datasX.push(x[optionX]);
-            })
-
-            datas.map(y => {
-                if(y[optionY] !== undefined && y["product_code"] === optionP) datasY.push(y[optionY]);
-            })
-
-            datas.map(y => {
-                if(selectProduct2 !== null) {
-                    const iP2 = selectProduct2.selectedIndex;
-                    const optionP2 = selectProduct2.options[iP2].value;
-                    if (optionP2 !== undefined)
-                        if (y[optionY] !== undefined && y["product_code"] === optionP2) datasY2.push(y[optionY]);
-                }
-            })
-
-            dataset_empty();
-            add_dataSet(datasY, "");
-            add_dataSet(datasY2, "");
-            generate_graph(optionType, datasX, datasets, title_graphique);
-        }
-
-        function compare_product(datas){
-            let select_another_product = select_product(datas, "select_product2");
-            $("#selectColumns").append(select_another_product);
-        }
-
-    </script>
-
-    <script>
-        function generate_graph(type, dataX, dataSets, title) {
-            let chartStatus = Chart.getChart("myChart");
-            if (chartStatus !== undefined) {
-                chartStatus.destroy();
-            }
-
-            $("#div_graph").show();
-
-            let data = {
-                labels: dataX,
-                datasets: dataSets
-            };
-            const config = {
-                type: type,
-                data: data,
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: title
-                        },
-                        legend: {
-                            display: true,
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true
-                        },
-                        y: {
-                            beginAtZero: true
-                        }
+                        //creates PDF from img
+                        var doc = new jsPDF('landscape');
+                        doc.setFontSize(20);
+                        doc.text(15, 15, "Rapport");
+                        doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150);
+                        doc.save('rapport.pdf');
                     }
-
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-            };
-
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                config
-            );
-            $("#generate_rapport").show();
-            return data.datasets;
-        }
-    </script>
-
-    <script>
-        function generate_pdf(){
-            var canvas = document.querySelector('#myChart');
-            //creates image
-            var canvasImg = canvas.toDataURL("image/png", 1.0);
-
-            //creates PDF from img
-            var doc = new jsPDF('landscape');
-            doc.setFontSize(20);
-            doc.text(15, 15, "Rapport");
-            doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
-            doc.save('rapport.pdf');
-        }
-    </script>
+                </script>
 
 
-
-{% endblock %}
+                {% endblock %}
