@@ -100,7 +100,7 @@
                     <select id="clients" style="display: none">
                         <option value="">Choose a client</option>
                         {% for client in clients %}
-                            <option value={{ client.id }}>{{ client.username }}</option>
+                            <option value={{ client.id }}>{{ client.Company }}</option>
                         {% endfor %}
                     </select>
                     <button id="generate_rapport" style="display: none"
@@ -423,9 +423,15 @@
                         doc.text(15, 15, "Rapport");
                         doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150);
 
+
+                        const selectX = document.getElementById('clients');
+                        const iX = selectX.selectedIndex;
+                        const optionX = selectX.options[iX].value;
+
                         var blob = doc.output('blob');
                         var formData = new FormData();
                         formData.append('pdf', blob);
+                        formData.append('user_id', optionX);
 
                         $.ajax({
                             url: "/admin/save-file",

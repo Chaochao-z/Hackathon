@@ -33,9 +33,9 @@ class DataController extends AbstractController
     {
         move_uploaded_file(
             $_FILES['pdf']['tmp_name'],
-            $this->getParameter('report_upload').'/'."test2.pdf"
+            $this->getParameter('report_upload').'/'."test4.pdf"
         );
 
-        return new JsonResponse($_FILES);
+        return new JsonResponse($_POST);
     }
 }
