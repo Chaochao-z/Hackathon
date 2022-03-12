@@ -77,8 +77,9 @@
                                         <input id="worksheetnumber" type="number"
                                                placeholder="Quel onglet choisir?"/>
                                         <button id="worksheet_selection"
-                                        class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600"
-                                        >Choisir</button>
+                                                class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600"
+                                        >Choisir
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -95,9 +96,21 @@
                 </div>
 
 
-                <button id="generate_rapport" style="display: none" class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600" onclick="generate_pdf()">Générer
-                    un rapport
-                </button>
+                <div>
+                    <select id="clients" style="display: none">
+                        <option value="">Choose a client</option>
+                        {% for client in clients %}
+                            <option value={{ client.id }}>{{ client.username }}</option>
+                        {% endfor %}
+                    </select>
+                    <button id="generate_rapport" style="display: none"
+                            class="btn w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-gray-600"
+                            onclick="generate_pdf()">Générer
+                        un rapport
+                    </button>
+                </div>
+
+
                 <script>
 
 
@@ -392,6 +405,8 @@
                             config
                         );
                         $("#generate_rapport").show();
+                        $("#clients").show();
+
                         return data.datasets;
                     }
                 </script>
@@ -407,7 +422,23 @@
                         doc.setFontSize(20);
                         doc.text(15, 15, "Rapport");
                         doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150);
-                        doc.save('rapport.pdf');
+
+                        var blob = doc.output('blob');
+                        var formData = new FormData();
+                        formData.append('pdf', blob);
+
+                        $.ajax({
+                            url: "/admin/save-file",
+                            method: 'POST',
+                            data: formData,
+                            dataType: 'text',
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+                                console.log(data)
+                            }
+                        });
+
                     }
                 </script>
 
