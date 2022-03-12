@@ -465,12 +465,10 @@
                             dataType: 'text',
                             processData: false,
                             contentType: false,
-                            success: function (data) {
-                                setTimeout(function (){
-                                    $("#toast").show();
-                                    $("#msg").html(data);
-                                    $("html, body").animate({scrollTop: 0}, 1000);
-                                }, 500)
+                            success: function (data) {                                
+                                $("#toast").show();
+                                $("#msg").html(data);
+                                $("html, body").animate({scrollTop: 0}, 1000);
                             }
                         });
 
